@@ -1,0 +1,16 @@
+---
+- hosts: app1
+  become: true
+  vars:
+   ansible_become_pass: edureka
+  tasks:
+   - name: Add group XYZ
+     group: name=xyz
+
+   - name: Add user xyz
+     user: 
+      name: xyz
+      group: xyz
+      shell: /bin/false
+      home: /opt/xyz 
+      state: present 

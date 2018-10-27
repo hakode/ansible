@@ -1,0 +1,13 @@
+---
+- hosts: app1
+  become: true
+  vars:
+   ansible_become_pass: edureka
+  tasks:
+  - name: create directory
+    shell: chdir=/tmp mkdir 1234 
+  - name: create files
+    shell: chdir=/tmp/1234 touch abcd.txt
+  - name: update cache
+    shell: sudo apt-get update
+  

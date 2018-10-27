@@ -1,0 +1,57 @@
+---
+# tasks file for tomcat
+  - name: update cache
+    shell: sudo apt-get update
+
+  - name:  Install jdk
+    #shell: apt-get install default-jdk warn=False
+    apt: pkg=default-jre state=installed update_cache=true
+
+  - name: Add group tomcat
+    group: name=tomcat
+
+  - name: Add user tomcat
+    user:
+     name: tomcat
+     group: tomcat
+     shell: /bin/false
+     home: /opt/tomcat
+     state: present
+#  - name: create directory tomcat
+#    shell: chdir=/opt mkdir tomcat
+  - name: download tomcat
+    get_url:
+     url: https://www.redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34.tar.gz
+     dest: /opt/tomcat
+     mode: 0777
+
+#  - name: download tomcat
+#    get_url:
+#     url: https://www.redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34.tar.gz
+#     dest: /tmp
+#     mode: 0777
+#  - name: unarchive tomcat file
+#    unarchive: src=/tmp/apache-tomcat-8.5.34.tar.gz dest=/tmp/tomcat remote_src=true
+  - name: extract archive
+    shell: /bin/tar xzvf /tmp/apache-tomcat-8.5.34.tar.gz -C /opt/tomcat --strip-components=1
+  - name: change group
+    shell: chown -R tomcat:tomcat /opt/tomcat
+  - name: chamge mode conf
+    shell: chmod -R g+r /opt/tomcat/conf
+
+
+  - name: tomcat service file
+    copy: src=tomcat.service dest=/etc/systemd/system/ mode=0777
+
+  - name: daemon_reload
+    systemd: daemon_reload=yes
+
+  - name: starttomcat
+    systemd:
+     state: restarted
+     daemon_reload: yes
+     name: tomcat
+
+
+
+

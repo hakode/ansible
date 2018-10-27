@@ -1,0 +1,22 @@
+---
+- hosts: app1
+  become: true
+  vars:
+   ansible_become_pass: edureka
+  tasks:
+ # - name: download tomcat
+  #  get_url: 
+   #  url: https://www.redrockdigimark.com/apachemirror/tomcat/tomcat-8/v8.5.34/bin/apache-tomcat-8.5.34.tar.gz 
+    # dest: /tmp
+    # mode: 0777
+  #- name: unarchive tomcat file
+  #  unarchive: src=/tmp/apache-tomcat-8.5.34.tar.gz dest=/tmp/tomcat remote_src=true copy=no
+ # - name: extract archive
+ #   shell: /bin/tar xzvf /tmp/apache-tomcat-8.5.34.tar.gz -C /tmp/tomcat --strip-components=1    
+  - name: change group
+    shell: chown -R xyz:xyz /tmp/tomcat
+  - name: chamge mode conf
+    shell: chmod -R g+r /tmp/tomcat/conf
+  - name: change mode conf
+    shell: chmod -R g+x /tmp/tomcat/conf
+   

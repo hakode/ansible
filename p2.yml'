@@ -1,0 +1,14 @@
+---
+- hosts: app1
+  become: true
+  vars:
+   ansible_become_pass: edureka
+  tasks:
+   - name: create directory
+     command: mkdir /home/edureka/1234
+
+   - name: change directory
+     command: chdir=/home/edureka/1234
+
+   - name: create file
+     command: touch abc.txt

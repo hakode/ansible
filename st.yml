@@ -1,0 +1,15 @@
+---
+- hosts: app1
+  become: true
+  vars:
+   ansible_become_pass: edureka
+  tasks:
+  - name: start tomcat
+#    shell: ./opt/tomcat/bin/start.sh
+#    service: name=tomcat state=started
+#    systemd: state=restarted name=tomcat enabled=yes
+#    shell: systemctl start tomcat
+    systemd:
+     state: restarted
+     daemon_reload: yes
+     name: tomcat
